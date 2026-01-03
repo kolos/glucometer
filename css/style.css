@@ -1,0 +1,406 @@
+/* -------------------------------------------------------
+   Base layout
+------------------------------------------------------- */
+body {
+  margin: 0;
+  padding: 0;
+  background: #0f1320;
+  color: #e4e8f7;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.app {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+
+/* -------------------------------------------------------
+   Header
+------------------------------------------------------- */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+h1 {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: 600;
+}
+
+.subtitle {
+  margin-top: 4px;
+  font-size: 0.9rem;
+  color: #8a92b2;
+}
+
+.badge {
+  background: #4f8cff;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  margin-left: 6px;
+}
+
+.badge-soft {
+  background: rgba(79, 140, 255, 0.15);
+  color: #4f8cff;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+}
+
+/* -------------------------------------------------------
+   Buttons
+------------------------------------------------------- */
+.btn {
+  background: #4f8cff;
+  border: none;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.btn:hover {
+  background: #3a6fd6;
+}
+
+.btn.secondary {
+  background: #1b2236;
+  color: #8a92b2;
+}
+
+.btn.secondary:hover {
+  background: #232b42;
+}
+
+/* -------------------------------------------------------
+   Layout cards
+------------------------------------------------------- */
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.card {
+  background: #151a2a;
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 0 0 1px #1f2437;
+}
+
+.layout + .card {
+  margin-top: 32px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.card-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* -------------------------------------------------------
+   Status indicator
+------------------------------------------------------- */
+.status-text {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  background: #444a63;
+  border-radius: 50%;
+}
+
+.status-dot.online {
+  background: #4fd18b;
+}
+
+/* -------------------------------------------------------
+   Device info
+------------------------------------------------------- */
+.device-info {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  row-gap: 6px;
+  column-gap: 12px;
+  font-size: 0.9rem;
+}
+
+.device-info-label {
+  color: #8a92b2;
+}
+
+.device-info-value {
+  color: #e4e8f7;
+}
+
+/* -------------------------------------------------------
+   Log window
+------------------------------------------------------- */
+.log {
+  background: #0f1320;
+  border-radius: 6px;
+  padding: 10px;
+  height: 260px;
+  overflow-y: auto;
+  font-family: monospace;
+  font-size: 0.8rem;
+  border: 1px solid #1f2437;
+}
+
+.log-line {
+  margin-bottom: 2px;
+}
+
+.log-line.error {
+  color: #ff6b6b;
+}
+
+.log-line.dim {
+  color: #8a92b2;
+}
+
+.log-line.tx {
+  color: #4f8cff;
+}
+
+.log-line.rx {
+  color: #4fd18b;
+}
+
+
+/* -------------------------------------------------------
+   Chart
+------------------------------------------------------- */
+.chart-container {
+  background: #0f1320;
+  border-radius: 6px;
+  padding: 12px;
+  border: 1px solid #1f2437;
+}
+
+.chart-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.chart-legend {
+  display: flex;
+  gap: 12px;
+}
+
+.chart-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.chart-legend-swatch {
+  width: 12px;
+  height: 12px;
+  background: #4f8cff;
+  border-radius: 3px;
+}
+
+/* -------------------------------------------------------
+   Table
+------------------------------------------------------- */
+.table-wrapper {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+thead {
+  background: #1b2236;
+}
+
+th, td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #1f2437;
+}
+
+tbody tr:hover {
+  background: #1b2236;
+}
+
+/* -------------------------------------------------------
+   Pills
+------------------------------------------------------- */
+.pill {
+  background: rgba(79, 140, 255, 0.15);
+  color: #4f8cff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.8rem;
+}
+
+.pill-clickable {
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, color 0.15s;
+}
+
+.pill-clickable:hover {
+  background: rgba(79, 140, 255, 0.25);
+}
+
+
+/* -------------------------------------------------------
+   Value chip
+------------------------------------------------------- */
+.value-chip {
+  background: rgba(79, 140, 255, 0.15);
+  color: #4f8cff;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.value-chip .unit {
+  margin-left: 4px;
+  font-size: 0.75rem;
+  color: #8a92b2;
+}
+
+/* -------------------------------------------------------
+   Meal type chips
+------------------------------------------------------- */
+.meal-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.meal-normal {
+  background: rgba(79, 209, 139, 0.12);
+  color: #4fd18b;
+}
+
+.meal-before {
+  background: rgba(255, 200, 80, 0.15);
+  color: #ffca50;
+}
+
+.meal-after {
+  background: rgba(255, 120, 120, 0.15);
+  color: #ff7878;
+}
+
+/* -------------------------------------------------------
+   Footer info / disclaimers
+------------------------------------------------------- */
+.footer-info {
+  margin-top: 24px;
+  padding: 16px;
+  background: #151a2a;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px #1f2437;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: #c7cbe0;
+}
+
+.footer-info p {
+  margin: 0 0 10px 0;
+}
+
+.footer-info p:last-child {
+  margin-bottom: 0;
+}
+
+.footer-info .dim {
+  color: #8a92b2;
+}
+
+/* -------------------------------------------------------
+   WebHID warning
+------------------------------------------------------- */
+.warning {
+  background: #2a1a1a;
+  border: 1px solid #5a2a2a;
+  color: #ffb3b3;
+  padding: 14px 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* -------------------------------------------------------
+   Table pill (click to copy)
+------------------------------------------------------- */
+#tablePill {
+  display: inline-block;
+  padding: 4px 10px;
+  background: #1f2437;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: #c7cbe0;
+  border: 1px solid #2c3248;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+#tablePill:hover {
+  background: #2a3046;
+  border-color: #3a4160;
+}
+
+#tablePill:active {
+  background: #3a4160;
+}
+
+/* -------------------------------------------------------
+   Copy notification
+------------------------------------------------------- */
+.pill-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.copy-toast {
+  position: absolute;
+  top: -20px;
+  right: 0;
+  background: #4fd18b;
+  color: #0d1a0f;
+  padding: 4px 8px;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  pointer-events: none;
+}
+
+
+
