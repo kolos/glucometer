@@ -6,6 +6,8 @@ window.UI = (() => {
     2: { label: "After meal", class: "meal-after" }
   };
 
+  let currentUnit = "mg/dL";
+
   const logEl = document.getElementById("log");
   const statusDot = document.getElementById("statusDot");
   const statusText = document.getElementById("statusText");
@@ -14,6 +16,7 @@ window.UI = (() => {
   const summaryPill = document.getElementById("summaryPill");
   const chartCanvas = document.getElementById("chartCanvas");
   const chartTitle = document.getElementById("chartTitle");
+  const chartLegendUnit = document.getElementById("chartLegendUnit");
 
   tablePill.addEventListener("click", () => {
     if (window.readings) {
@@ -49,7 +52,7 @@ window.UI = (() => {
         <td>${s.length - i}</td>
         <td>${r.date.toLocaleDateString()}</td>
         <td>${r.date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</td>
-        <td><span class="value-chip">${r.value}<span class="unit">mg/dL</span></span></td>
+        <td><span class="value-chip">${r.value}<span class="unit">${currentUnit}</span></span></td>
         <td><span class="meal-chip ${MEAL_TYPE[r.measureType].class}">${MEAL_TYPE[r.measureType].label}</span></td>
       `;
 
@@ -145,7 +148,7 @@ window.UI = (() => {
 
   function exportCSV(d) {
     if (!d.length) return;
-    const header = ["index", "date", "time", "value_mg_dL", "meal_type"];
+    const header = ["index", "date", "time", `value_${currentUnit}`, "meal_type"];
     const rows = d.map(r => {
       const dt = r.date;
       return [
@@ -187,7 +190,7 @@ window.UI = (() => {
     }
 
     // Excel-friendly TSV
-    const header = "timestamp\tvalue\tmealType";
+    const header = `timestamp\tvalue_${currentUnit}\tmealType`;
     const lines = d.map(r =>
       `${r.date.toISOString()}\t${r.value}\t${r.measureType}`
     );
@@ -200,13 +203,19 @@ window.UI = (() => {
     });
   }
 
+  function setUnit(u) {
+    currentUnit = u;
+    chartLegendUnit.textContent = `Glucose (${u})`;
+  }
+
   return {
     logLine,
     setStatus,
     renderTable,
     drawChart,
     exportCSV,
-    copyToClipboard
+    copyToClipboard,
+    set unit(u) { setUnit(u); },
   };
 
 })();

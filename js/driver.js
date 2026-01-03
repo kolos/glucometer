@@ -22,6 +22,7 @@ window.Driver = (() => {
 
   const FEATURE_UART_CFG = 0x41;
 
+  let currentUnit = "mg/dL";
   let device = null;
   let uartBuffer = [];
   let log = () => {};
@@ -169,7 +170,8 @@ window.Driver = (() => {
     const date = decodeRecordTimestamp(a);
 
     const b = await sendCmdAndWait(CMD_STORAGE_DATA_WITH_INDEX2, p);
-    const value = b[0] | (b[1] << 8);
+    const rawValue = b[0] | (b[1] << 8);
+    const value = convertValue(rawValue, currentUnit);
     const measureType = b[3] >> 6;
 
     return { index: i, date, value, measureType };
@@ -224,6 +226,24 @@ window.Driver = (() => {
     await sendCmdAndWait(CMD_SET_SYSTEM_CLOCK_TIME, payload);
   }
 
+  async function readRangeSettings() {
+    const r = await sendCmdAndWait(CMD_GET_RANGE);
+
+    const low = r[0];
+    const high = r[1];
+    const unitFlag = r[2];   // 0 = mg/dL, 1 = mmol/L
+
+    const unit = unitFlag === 0 ? "mg/dL" : "mmol/L";
+
+    return { low, high, unit };
+  }
+
+  function convertValue(rawValue, unit) {
+    // Device always stores mg/dL internally
+    if (unit === "mg/dL") return rawValue;
+    return rawValue / 18;
+  }
+
   return {
     VID, PID,
     get device() { return device; },
@@ -239,6 +259,10 @@ window.Driver = (() => {
     readAllReadings,
     getDatetime,
     setDatetime,
+    readRangeSettings,
+    convertValue,
+    get unit() { return currentUnit; },
+    set unit(u) { currentUnit = u; },
   };
 
 })();

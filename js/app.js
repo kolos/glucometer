@@ -45,7 +45,12 @@ async function connectAndSync() {
       hour: "2-digit",
       minute: "2-digit"
     });
-    
+
+    UI.logLine("Reading measurement range settings...", "dim");
+    const range = await Driver.readRangeSettings();
+    Driver.unit = range.unit;
+    UI.unit = range.unit;
+
     UI.logLine("Reading stored data count...", "dim");
     const count = await Driver.readCount();
     devCountEl.textContent = count;
