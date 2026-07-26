@@ -52,7 +52,7 @@ window.UI = (() => {
         <td>${s.length - i}</td>
         <td>${r.date.toLocaleDateString()}</td>
         <td>${r.date.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</td>
-        <td><span class="value-chip">${r.value}<span class="unit">${currentUnit}</span></span></td>
+        <td><span class="value-chip">${r.value.toFixed(1)}<span class="unit">${currentUnit}</span></span></td>
         <td><span class="meal-chip ${MEAL_TYPE[r.measureType].class}">${MEAL_TYPE[r.measureType].label}</span></td>
       `;
 
@@ -65,7 +65,7 @@ window.UI = (() => {
       const vals = d.map(r => r.value);
       const min = Math.min(...vals), max = Math.max(...vals);
       const avg = vals.reduce((a, b) => a + b, 0) / vals.length;
-      summaryPill.textContent = `Min ${min} · Max ${max} · Avg ${Math.round(avg)}`;
+      summaryPill.textContent = `Min ${min.toFixed(1)} · Max ${max.toFixed(1)} · Avg ${avg.toFixed(1)}`;
       chartTitle.textContent = `Last ${d.length} readings`;
     } else {
       summaryPill.textContent = "No data";
@@ -190,9 +190,17 @@ window.UI = (() => {
     }
 
     // Excel-friendly TSV
+    const locale = navigator.language;
+
+    // Locale timestamp formatter
+    const fmt = new Intl.DateTimeFormat(locale, {
+      year: "numeric", month: "2-digit", day: "2-digit",
+      hour: "2-digit", minute: "2-digit", second: "2-digit"
+    });
+
     const header = `timestamp\tvalue_${currentUnit}\tmealType`;
     const lines = d.map(r =>
-      `${r.date.toISOString()}\t${r.value}\t${r.measureType}`
+      `${fmt.format(r.date)}\t${r.value.toLocaleString(locale)}\t${r.measureType}`
     );
 
     const tsv = [header, ...lines].join("\n");
